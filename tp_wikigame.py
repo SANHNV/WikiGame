@@ -1,9 +1,15 @@
 #!/bin/python
 # coding: utf-8
 
+#region imports
+
 from bs4 import BeautifulSoup
 import urllib.request
 import re
+
+#endregion
+
+#region Colors
 
 #Some colors or effect
 class bcolors:
@@ -31,7 +37,9 @@ def colored(color, string):
     }
     return switcher.get(color, "")
 
-#Get finish url from randon wiki url
+#endregion
+
+#Get url and title from wiki url
 def ReturnLink(link):
     with urllib.request.urlopen(link) as response:
         webpage = response.read()
@@ -42,15 +50,19 @@ def ReturnLink(link):
 def CheckLinkToKeep(link):
     return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet'))
 
-### Initialization
-#Initialize the wiki links
+#region Initialization
+
+#Wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
 linkStart = ReturnLink(linkRandom)
 linkFinish = ReturnLink(linkRandom)
-likeBase = "https://fr.wikipedia.org"
+
+#Variables
+linkBase = "https://fr.wikipedia.org"
 global linkActive
 listLinkToIgnore = ([])
-###
+
+#endregion
 
 #Print list of link choice for next jump
 def printChoice(listLink):
@@ -117,7 +129,7 @@ while linkActive[1] != linkFinish[1] :
     printChoice(listLink) #show choices
     nextjump = checkSaisie() #get command
     element = listLink[nextjump-1]
-    linkActive = ReturnLink(likeBase + element[0]) #update active link
+    linkActive = ReturnLink(linkBase + element[0]) #update active link
     print("\n   ------------\n")
 print( bcolors.OKGREEN + "Congrats, you win !" + bcolors.ENDC)
 

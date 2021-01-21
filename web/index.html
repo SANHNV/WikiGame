@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Libs (mostly bootstrap) -->
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- end lib -->
+    <title>WikiGame</title>
+</head>
+<body class="container p-3 my-3 bg-dark text-white">
+    <div>
+        <a href="#" id="button-name">Display name</a>
+        <a href="#" id="button-number">Display a random number</a>
+        <a href="#" id="button-ip">Display my ip</a>
+    </div> 
+    
+    <h1>Wiki Game</h1>
+
+    <div class="container-fluid m-3">
+        <p>
+            Rule 1 : You do <strong>not talk</strong> about the wiki game. <br>
+            Rule 2 : You do <strong>not talk</strong> about the wiki game. <br>
+            Rule 3 : <strong>Dare</strong> click on link to start you're wiki walk. <br>
+            Rule 4 : Wiki Game will <strong>go on</strong> as long as it has to. <br>
+            Rule 5 : To bypass <strong>Rule 4</strong> you know what to do. <br>
+        </p>
+        <button class="btn btn-success btn-lg hidden align-content-center" id="startGame">Start</button>
+        <div id="game" class="hidden">
+            <div>
+                <p id="keepScore">
+                    <span class="badge badge-light"> Start </span> : <span id="startLink">Lion</span>
+                    <br>
+                    <span class="badge badge-light">Active</span> : <span id="activeLink">Giraffe</span>
+                    <br>
+                    <span class="badge badge-light"> Goal </span> : <span id="finishLink">Lièvre</span>
+                    <br>
+                    <span class="badge badge-light">  Try </span> : <span id="score">198</span>
+                </p>
+            </div>
+
+            <div id="list_container" class="container-fluid">
+                <ul class="list-group justify-content-center align-content-center">
+                    <li class="list-group-item bg-success">First item</li>
+                    <li class="list-group-item bg-primary">Second item</li>
+                    <li class="list-group-item bg-dark">Third item</li>
+                </ul> 
+            </div>
+        </div>
+        
+    </div>
+    <script src="/eel.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
