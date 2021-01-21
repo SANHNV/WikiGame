@@ -32,9 +32,11 @@ def colored(color, string):
     return switcher.get(color, "")
 
 #Get finish url from randon wiki url
-def ReturnLink():
-    with urllib.request.urlopen(linkRandom) as response:
-        return response.url
+def ReturnLink(link):
+    with urllib.request.urlopen(link) as response:
+        webpage = response.read()
+        soup = BeautifulSoup(webpage, 'html.parser')
+        return (response.url, soup.find(id="firstHeading").get_text())
         
 #Clean up the links captured
 def CheckLinkToKeep(link):
@@ -43,8 +45,8 @@ def CheckLinkToKeep(link):
 ### Initialization
 #Initialize the wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink()
-linkFinish = ReturnLink()
+linkStart = ReturnLink(linkRandom)
+linkFinish = ReturnLink(linkRandom)
 likeBase = "https://fr.wikipedia.org"
 global linkActive
 listLinkToIgnore = ([])
@@ -85,7 +87,7 @@ def play(link):
         listLink[:] = [(x,_) for (x,_) in listLink if CheckLinkToKeep(x)]
 
         #Print the active link and the next choices
-        print(colored("blue","Start : ") + colored("cyan", linkStart) + colored("blue","\nActive link : ") + colored("cyan",linkActive) + colored("blue","\nGoal : ") + colored("cyan", linkFinish) + "\n")
+        print(colored("blue","Start : ") + colored("cyan", str(linkStart[1])) + colored("blue","\nActive link : ") + colored("cyan", str(linkActive[1])) + colored("blue","\nGoal : ") + colored("cyan", str(linkFinish[1])) + "\n")
 
         return listLink
 
@@ -110,12 +112,12 @@ def checkSaisie():
 #Start message
 print(colored("bold", colored("blue","Welcome to the WikiGame!\n")) + colored("blue","\nThe Only Rule : Enter the number of your next jump to start you wikiwalk.\n")+ "   ------------\n")
 linkActive = linkStart
-while linkActive != linkFinish :
-    listLink = play(linkActive) #get choices
+while linkActive[1] != linkFinish[1] :
+    listLink = play(linkActive[0]) #get choices
     printChoice(listLink) #show choices
     nextjump = checkSaisie() #get command
     element = listLink[nextjump-1]
-    linkActive = likeBase + element[0] #update active link
+    linkActive = ReturnLink(likeBase + element[0]) #update active link
     print("\n   ------------\n")
 print( bcolors.OKGREEN + "Congrats, you win !" + bcolors.ENDC)
 
