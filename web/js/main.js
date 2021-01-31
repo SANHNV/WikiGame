@@ -1,41 +1,49 @@
-color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark", "bg-light"];
-linkActive_js = ["", ""]
-linksOption = []
+color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark"];
+linkActive_js = ["", ""];
+linksOption = [];
+StartLink = "";
 
+//Get Start link at the start
+eel.expose(setStartLink);
+function setStartLink(linkStart){
+  StartLink = linkStart.split("=");
+  document.getElementById("test").innerText = StartLink;
+  StartLink[1] = StartLink[1].slice(1, StartLink[1].lenght);
+  //document.getElementById("test").innerText = StartLink;
+  eel.getLinks(StartLink[0]);
+}
 //Update score and links
-eel.expose(showScore_js);
-function showScore_js(linkStart, linkActive, linkFinish, score){
-  linkActive_js = linkActive.split("=");
+function showScore(linkStart, linkActive, linkFinish, score){
   document.getElementById("score").innerHTML = score;
   document.getElementById("startLink").innerHTML = linkStart;
   document.getElementById("activeLink").innerHTML = linkActive_js[1];
   document.getElementById("finishLink").innerHTML = linkFinish;
-
-  //Call the link to choose from
-  eel.getLinks(linkActive_js[0]);
 }
 
 //Call when the game start the first time
 function gameStart(){
   document.getElementById("game").style.display = "block";
   document.getElementById("button_startGame").setAttribute("hidden", "none");
-  eel.showScore()
+  eel.getStartLink();
 }
 
 //Display links in list ul
 eel.expose(displayOptions);
-function displayOptions(links){
+function displayOptions(links, linkStart, linkActive, linkFinish, score){
   linksOption = links;
-
-  //Test links are received
-  document.getElementById("test").innerText = linksOption;
-
-  //Add to DOM => Not working
+  showScore(linkStart, linkActive, linkFinish, score)
+  //Remove any element existing in dom
   var parent = document.getElementById("options");
+  while (parent.hasChildNodes()) {  
+    parent.removeChild(parent.firstChild);
+  } 
+
+  //Add new element in dom
   linksOption.forEach(element => {
-    var child = parent.createAttribute("li");
-    child.className = "list-group-item " + color[Math.floor(Math.random() * 8)];
+    var child = document.createElement("li");
+    child.className = "list-group-item rounded m-3 border-light " + color[Math.floor(Math.random() * 7)];
     child.innerText = element.slice(element.indexOf("=")+1, element.lenght);
+    child.addEventListener("click", eel.getLinks(child.innerText));
     parent.appendChild(child);
   });
 }

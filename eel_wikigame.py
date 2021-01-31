@@ -8,21 +8,21 @@ import re
 
 #endregion
 
+#start gui
+eel.init('web')
+
 #Get url and title from random wiki url
 def ReturnLink(link):
-    try:
-        with urllib.request.urlopen(link) as response:
-            webpage = response.read()
-            soup = BeautifulSoup(webpage, 'html.parser')
-            return (response.url, soup.find(id="firstHeading").get_text())
-    except:
-        print("ERROR with ReturnLink at the random link selectio /!\\")
+    with urllib.request.urlopen(link) as response:
+        webpage = response.read()
+        soup = BeautifulSoup(webpage, 'html.parser')
+        return (response.url, soup.find(id="firstHeading").get_text())
 
 #region Initialization
 
 #Initialize the wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink(linkRandom)
+linkStart = ReturnLink("https://fr.wikipedia.org/wiki/Philippe_le_Hardi")
 linkFinish = ReturnLink(linkRandom)
 likeBase = "https://fr.wikipedia.org"
 
@@ -30,8 +30,7 @@ likeBase = "https://fr.wikipedia.org"
 global linkActive 
 linkActive = linkStart
 listLinkToIgnore = [("","")]
-
-score = 0
+global score = 0
 
 #Clean up the links captured
 def CheckLinkToKeep(link):
@@ -43,24 +42,26 @@ def TupleToJs(tuple):
 
 #region GUI eel
 
-#start gui
-eel.init('web')
-
-#Show score on web
+#Get StartLink
 @eel.expose
-def showScore():
-    temp = score if score !=0 else "Let's get started"
-    eel.showScore_js(linkStart[1], TupleToJs(linkActive), linkFinish[1], temp)
+def getStartLink():
+    eel.setStartLink(TupleToJs(linkStart))
 
 #Filter list of links for next jump and return it
 @eel.expose
 def getLinks(link):
+    linkActive = ReturnLink(link)
+    if score == None :
+        score =0
     listLink = [("","")]
     listLink.remove(("",""))
 
     #Get all the link in the page
     print(link)
-    with urllib.request.urlopen(link) as response:
+    print(linkActive)
+    print("\n\n\n")
+
+    with urllib.request.urlopen(linkActive[0]) as response:
         webpage = response.read()
         soup = BeautifulSoup(webpage, 'html.parser')
         for anchor in soup.find_all(id="content"):
@@ -84,9 +85,11 @@ def getLinks(link):
         for i in listLink:
             listjs.append(TupleToJs(i))
         
-        print("Jusqu'ici, tout va bien.")
-        print(listjs)
-        eel.displayOptions(listjs)
+        #return list and score
+        temp = score if score !=0 else "Let's get started"
+        eel.displayOptions(listjs,linkStart[1], linkActive[1], linkFinish[1], temp)
+        score +=1
+
 
 #endregion
 

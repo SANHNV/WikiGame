@@ -17,7 +17,7 @@
         <a class="navbar-brand active" href="#" id="button_home"> WikiGame</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#" id="button_rules"> Hide Rules</a>
+                <a class="nav-item nav-link active" href="#" id="button_rules">Rules</a>
                 <a class="nav-item nav-link active" href="#" id="button_restart">Restart</a>
             </div>
         </div>
@@ -25,7 +25,7 @@
     
     <div class="container-fluid">
         <!-- RULES -->
-        <div id="rules" class="border border-success rounded m-3 text-center p-3">
+        <div id="rules" class="border border-success rounded m-3 text-center p-3 hidden">
             <p class="text-left"><u> Rules of the WikiGame</u> :</p>
                 #1 : You do <strong>not talk</strong> about the wiki game. <br>
                 #2 : You do <strong>not talk</strong> about the wiki game. <br>
@@ -52,16 +52,13 @@
                     <br>
                     <span class="badge badge-light">  Try </span> : <span id="score">198</span>
                     <br>
-                    <span class="badge badge-light">  Test Result </span> : <span id="test">test result</span>
+                    <span class="badge badge-light">  Test </span> : <span id="test">198</span>
                 </p>
             </div>
 
             <!-- OPTIONS -->
             <div id="list_container" class="container-fluid">
-                <ul class="list-group justify-content-center align-content-center" id="options">
-                    <li class="list-group-item bg-success">First item</li>
-                    <li class="list-group-item bg-primary">Second item</li>
-                    <li class="list-group-item bg-dark">Third item</li>
+                <ul class="d-flex justify-content-center align-content-center flex-wrap" id="options">
                 </ul> 
             </div>
         </div>
