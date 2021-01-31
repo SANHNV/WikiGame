@@ -86,7 +86,7 @@ def getLinks(link):
         
         print("Jusqu'ici, tout va bien.")
         print(listjs)
-        eel.displayOptions(listLink)
+        eel.displayOptions(listjs)
 
 #endregion
 
