@@ -12,7 +12,9 @@ function setStartLink(linkStart){
   //document.getElementById("test").innerText = StartLink;
   eel.getLinks(StartLink[0]);
 }
+
 //Update score and links
+eel.expose(showScore);
 function showScore(linkStart, linkActive, linkFinish, score){
   document.getElementById("score").innerHTML = score;
   document.getElementById("startLink").innerHTML = linkStart;
@@ -29,9 +31,9 @@ function gameStart(){
 
 //Display links in list ul
 eel.expose(displayOptions);
-function displayOptions(links, linkStart, linkActive, linkFinish, score){
+function displayOptions(links){
   linksOption = links;
-  showScore(linkStart, linkActive, linkFinish, score)
+
   //Remove any element existing in dom
   var parent = document.getElementById("options");
   while (parent.hasChildNodes()) {  
@@ -43,7 +45,7 @@ function displayOptions(links, linkStart, linkActive, linkFinish, score){
     var child = document.createElement("li");
     child.className = "list-group-item rounded m-3 border-light " + color[Math.floor(Math.random() * 7)];
     child.innerText = element.slice(element.indexOf("=")+1, element.lenght);
-    child.addEventListener("click", eel.getLinks(child.innerText));
+    //child.addEventListener("click", eel.getLinks(child.innerText));
     parent.appendChild(child);
   });
 }

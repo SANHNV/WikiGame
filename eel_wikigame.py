@@ -30,7 +30,8 @@ likeBase = "https://fr.wikipedia.org"
 global linkActive 
 linkActive = linkStart
 listLinkToIgnore = [("","")]
-global score = 0
+global score
+score = 0
 
 #Clean up the links captured
 def CheckLinkToKeep(link):
@@ -45,14 +46,18 @@ def TupleToJs(tuple):
 #Get StartLink
 @eel.expose
 def getStartLink():
+    global score
+    score = 0
     eel.setStartLink(TupleToJs(linkStart))
+
+def showScore():
+    temp = score if score !=0 else "Let's get started"
+    eel.showScore(linkStart[1], linkActive[1], linkFinish[1], temp)
 
 #Filter list of links for next jump and return it
 @eel.expose
 def getLinks(link):
     linkActive = ReturnLink(link)
-    if score == None :
-        score =0
     listLink = [("","")]
     listLink.remove(("",""))
 
@@ -86,8 +91,9 @@ def getLinks(link):
             listjs.append(TupleToJs(i))
         
         #return list and score
-        temp = score if score !=0 else "Let's get started"
-        eel.displayOptions(listjs,linkStart[1], linkActive[1], linkFinish[1], temp)
+        eel.displayOptions(listjs)
+        showScore()
+        global score
         score +=1
 
 
