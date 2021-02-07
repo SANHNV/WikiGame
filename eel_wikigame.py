@@ -9,7 +9,7 @@ import re
 #endregion
 
 #start gui
-eel.init('web')
+eel.init('web', )
 
 #Get url and title from random wiki url
 def ReturnLink(link):
@@ -22,49 +22,43 @@ def ReturnLink(link):
 
 #Initialize the wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink("https://fr.wikipedia.org/wiki/Philippe_le_Hardi")
+linkStart = ReturnLink(linkRandom)
 linkFinish = ReturnLink(linkRandom)
 likeBase = "https://fr.wikipedia.org"
-
-#Variables
 global linkActive 
 linkActive = linkStart
 listLinkToIgnore = [("","")]
-global score
-score = 0
+
+#endregion
 
 #Clean up the links captured
-def CheckLinkToKeep(link):
+def CheckLinkToKeep(link, text):
     return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet'))
 
-#Format tuple to string = "tuple0=tuple1"
+#Format tuple to string = "tuple0=tuple1" as JS don't support tuple
 def TupleToJs(tuple):
     return tuple[0] + "=" + tuple[1]
 
 #region GUI eel
 
-#Get StartLink
+#Get Set all links and return the link start 
+#Also use to reset the game
 @eel.expose
 def getStartLink():
-    global score
-    score = 0
+    # global linkFinish, linkFinish, linkActive
+    # linkStart = ReturnLink(linkRandom)
+    # linkFinish = ReturnLink(linkRandom)
+    # linkActive = linkStart
     eel.setStartLink(TupleToJs(linkStart))
-
-def showScore():
-    temp = score if score !=0 else "Let's get started"
-    eel.showScore(linkStart[1], linkActive[1], linkFinish[1], temp)
 
 #Filter list of links for next jump and return it
 @eel.expose
 def getLinks(link):
+    link = link if "http" in link else likeBase + link
+    print(link)
     linkActive = ReturnLink(link)
     listLink = [("","")]
     listLink.remove(("",""))
-
-    #Get all the link in the page
-    print(link)
-    print(linkActive)
-    print("\n\n\n")
 
     with urllib.request.urlopen(linkActive[0]) as response:
         webpage = response.read()
@@ -83,23 +77,24 @@ def getLinks(link):
             for rightSide in anchor.find_all('div', {'class': re.compile(r"^infobox")}):
                 for a in rightSide.findChildren("a") :
                     listLinkToIgnore.append(a.get('href'))
+            for infobox in anchor.find_all('table'):
+                for a in infobox.findChildren("a") :
+                    listLinkToIgnore.append(a.get('href'))
 
         #Clean up the list
-        listLink[:] = [(x,_) for (x,_) in listLink if CheckLinkToKeep(x)]
+        listLink[:] = [(x,_) for (x,_) in listLink if CheckLinkToKeep(x,_)]
         listjs = []
         for i in listLink:
             listjs.append(TupleToJs(i))
         
         #return list and score
         eel.displayOptions(listjs)
-        showScore()
-        global score
-        score +=1
+        eel.showScore(linkStart[1], linkActive[1], linkFinish[1])
 
 
 #endregion
 
-#start GUI
-eel.start('index.html')
+#start GUI in firefox
+eel.start('index.html', mode='chrome-app')
 
 #endregion

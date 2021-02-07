@@ -44,6 +44,7 @@ def ReturnLink(link):
     with urllib.request.urlopen(link) as response:
         webpage = response.read()
         soup = BeautifulSoup(webpage, 'html.parser')
+        print("Return LINK = " + response.url + "\n" + soup.find(id="firstHeading").get_text())
         return (response.url, soup.find(id="firstHeading").get_text())
         
 #Clean up the links captured
@@ -54,7 +55,7 @@ def CheckLinkToKeep(link):
 
 #Wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink(linkRandom)
+linkStart = ReturnLink("https://fr.wikipedia.org/wiki/KM3NeT")
 linkFinish = ReturnLink(linkRandom)
 
 #Variables
@@ -93,6 +94,9 @@ def play(link):
                     listLinkToIgnore.append(a.get('href'))
             for rightSide in anchor.find_all('div', {'class': re.compile(r"^infobox")}):
                 for a in rightSide.findChildren("a") :
+                    listLinkToIgnore.append(a.get('href'))
+            for infobox in anchor.find_all('table'):
+                for a in infobox.findChildren("a") :
                     listLinkToIgnore.append(a.get('href'))
 
         #Clean up the list
