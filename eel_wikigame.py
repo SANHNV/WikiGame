@@ -22,18 +22,17 @@ def ReturnLink(link):
 
 #Initialize the wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink(linkRandom)
-linkFinish = ReturnLink(linkRandom)
 likeBase = "https://fr.wikipedia.org"
+global linkStart
+global linkFinish
 global linkActive 
-linkActive = linkStart
 listLinkToIgnore = [("","")]
 
 #endregion
 
 #Clean up the links captured
 def CheckLinkToKeep(link, text):
-    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet')) and not (link.startswith('/wiki/Discussion_Wikipédia:')) and not (link.startswith('/wiki/Sp%C3%A9cial:Ouvrages')) 
+    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet')) and not (link.startswith('/wiki/Discussion_Wikipédia:')) and not (link.startswith('/wiki/Sp%C3%A9cial:Ouvrages')) and not (link.startswith('/books.google.com/books')) and not (link.startswith('/wiki/Wikipédia:')) 
     
 #Format tuple to string = "tuple0=tuple1" as JS don't support tuple
 def TupleToJs(tuple):
@@ -45,10 +44,12 @@ def TupleToJs(tuple):
 #Also use to reset the game
 @eel.expose
 def getStartLink():
-    # global linkFinish, linkFinish, linkActive
-    # linkStart = ReturnLink(linkRandom)
-    # linkFinish = ReturnLink(linkRandom)
-    # linkActive = linkStart
+    global linkActive
+    global linkFinish
+    global linkStart
+    linkStart = ReturnLink(linkRandom)
+    linkFinish = ReturnLink(linkRandom)
+    linkActive = linkStart
     eel.setStartLink(TupleToJs(linkStart))
 
 #Filter list of links for next jump and return it

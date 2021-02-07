@@ -25,7 +25,7 @@
     
     <div class="container-fluid">
         <!-- RULES -->
-        <div id="rules" class="border border-success rounded m-3 text-center p-3 hidden">
+        <div hidden id="rules" class="border border-success rounded m-3 text-center p-3">
             <p class="text-left"><u> Rules of the WikiGame</u> :</p>
                 #1 : You do <strong>not talk</strong> about the wiki game. <br>
                 #2 : You do <strong>not talk</strong> about the wiki game. <br>
@@ -34,13 +34,18 @@
                 #5 : To bypass <strong>Rule 4</strong> you know what to do.
         </div>
 
+        <div hidden id="win" class="border border-light text-center rounded m-3 p-3">
+            <p>Congratulation you win ! &#127881;</p>
+            <p id="display_score"></p>
+        </div>
+
         <!-- START BUTTON -->
         <div class="d-flex justify-content-center m-3">
             <button class="btn btn-success btn-lg hidden" id="button_startGame">Start</button>
         </div>
 
         <!-- GAME CORE-->
-        <div id="game" class="hidden">
+        <div hidden id="game">
             <!-- INFORMATION PART -->
             <div>
                 <p id="keepScore" class="border border-light text-center rounded m-3 p-3">

@@ -49,13 +49,13 @@ def ReturnLink(link):
         
 #Clean up the links captured
 def CheckLinkToKeep(link):
-    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet'))
+    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet')) and not (link.startswith('/wiki/Discussion_Wikipédia:')) and not (link.startswith('/wiki/Sp%C3%A9cial:Ouvrages')) and not (link.startswith('/books.google.com/books')) and not (link.startswith('/wiki/Wikipédia:')) 
 
 #region Initialization
 
 #Wiki links
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
-linkStart = ReturnLink("https://fr.wikipedia.org/wiki/KM3NeT")
+linkStart = ReturnLink(linkRandom)
 linkFinish = ReturnLink(linkRandom)
 
 #Variables

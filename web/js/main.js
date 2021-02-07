@@ -1,6 +1,7 @@
 //Initilization Variable
 const color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark"];
 var score = 0;
+var end =""
 
 //Get Start link at the start
 eel.expose(setStartLink);
@@ -12,24 +13,42 @@ function setStartLink(linkStart){
 //Update score and links
 eel.expose(showScore);
 function showScore(linkStart, linkActive, linkFinish){
+
+  //Update the informations
   document.getElementById("score").innerHTML = score ;
   document.getElementById("startLink").innerHTML = linkStart;
   document.getElementById("activeLink").innerHTML = linkActive;
   document.getElementById("finishLink").innerHTML = linkFinish;
+
+  //In case of win
+  if (linkActive == linkFinish){
+    document.getElementById("game").setAttribute("hidden", '');
+    document.getElementById("button_startGame").removeAttribute("hidden");
+    document.getElementById("win").removeAttribute("hidden");
+    document.getElementById("display_score").innerText = "You only needed " + score + " tries!!";
+  }
 }
 
 //Call when the game start the first time
 function gameStart(){
   score = 0;
-  document.getElementById("game").style.display = "block";
-  document.getElementById("button_startGame").setAttribute("hidden", "none");
+  document.getElementById("game").removeAttribute("hidden");
+  document.getElementById("button_startGame").setAttribute("hidden", '');
+  document.getElementById("win").setAttribute("hidden", '');
   eel.getStartLink();
 }
 
-//Update score then next jump
+//Update score then do the next jump
 function onClick(link){
   score += 1;
   eel.getLinks(link);
+}
+
+//Remove all the options'children
+function cleanOption(parent){
+  while (parent.hasChildNodes()) {  
+    parent.removeChild(parent.firstChild);
+  } 
 }
 
 //Display links in list ul
@@ -37,11 +56,8 @@ eel.expose(displayOptions);
 function displayOptions(links){
   linksOption = links;
 
-  //Remove any element existing in dom
   var parent = document.getElementById("options");
-  while (parent.hasChildNodes()) {  
-    parent.removeChild(parent.firstChild);
-  } 
+  cleanOption(parent);
 
   //Add new element in dom
   linksOption.forEach(element => {
@@ -61,13 +77,13 @@ function displayOptions(links){
 document.getElementById("button_rules").addEventListener("click", ()=>
 {
   var element = document.getElementById("rules");
-  if (element.style.display != "block")
+  if (element.getAttribute("hidden") != null)
   {
-    element.style.display = "block";
+    element.removeAttribute("hidden");
     document.getElementById("button_rules").innerText = "Hide Rules";
   }
   else{
-    element.style.display = "none";
+    element.setAttribute("hidden", '');
     document.getElementById("button_rules").innerText = "Rules";
   }
 });
