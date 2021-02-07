@@ -33,8 +33,8 @@ listLinkToIgnore = [("","")]
 
 #Clean up the links captured
 def CheckLinkToKeep(link, text):
-    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet'))
-
+    return link != None and not (link in listLinkToIgnore) and not (link.startswith('/w/index')) and not (link.startswith('http')) and not (link.startswith('#')) and not (link.startswith('/wiki/Cat%C3%A9gorie')) and not (link.startswith('/wiki/Portail:')) and not (link.startswith('/wiki/Fichier')) and not (link.startswith('/wiki/Aide')) and not (link.startswith('/wiki/Projet')) and not (link.startswith('/wiki/Discussion_Wikipédia:')) and not (link.startswith('/wiki/Sp%C3%A9cial:Ouvrages')) 
+    
 #Format tuple to string = "tuple0=tuple1" as JS don't support tuple
 def TupleToJs(tuple):
     return tuple[0] + "=" + tuple[1]

@@ -1,8 +1,6 @@
-color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark"];
-linkActive_js = ["", ""];
-linksOption = [];
-StartLink = "";
-score = 0;
+//Initilization Variable
+const color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark"];
+var score = 0;
 
 //Get Start link at the start
 eel.expose(setStartLink);
@@ -14,7 +12,7 @@ function setStartLink(linkStart){
 //Update score and links
 eel.expose(showScore);
 function showScore(linkStart, linkActive, linkFinish){
-  document.getElementById("score").innerHTML = score == 0 ? "Let get Started!" : score ;
+  document.getElementById("score").innerHTML = score ;
   document.getElementById("startLink").innerHTML = linkStart;
   document.getElementById("activeLink").innerHTML = linkActive;
   document.getElementById("finishLink").innerHTML = linkFinish;
@@ -22,12 +20,15 @@ function showScore(linkStart, linkActive, linkFinish){
 
 //Call when the game start the first time
 function gameStart(){
+  score = 0;
   document.getElementById("game").style.display = "block";
   document.getElementById("button_startGame").setAttribute("hidden", "none");
   eel.getStartLink();
 }
 
+//Update score then next jump
 function onClick(link){
+  score += 1;
   eel.getLinks(link);
 }
 
