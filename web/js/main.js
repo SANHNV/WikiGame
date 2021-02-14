@@ -1,5 +1,5 @@
-//Initilization Variable
-const color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary", "bg-dark"];
+//Initilization Variables
+const color = ["bg-primary", "bg-success", "bg-info", "bg-warning", "bg-danger", "bg-secondary"];
 var score = 0;
 var end =""
 
@@ -62,10 +62,10 @@ function displayOptions(links){
   //Add new element in dom
   linksOption.forEach(element => {
     var link = element.split("=");
-    //display only if it's not white nor empty
-    if (link[1].trim() != ""){
+    //display only if it's not white nor empty, more than 1 character
+    if (link[1].trim() != "" && link[1].length >=2){
       var child = document.createElement("li");
-      child.className = "list-group-item rounded m-3 border-light " + color[Math.floor(Math.random() * 7)];
+      child.className = "list-group-item rounded m-3 border-light " + color[Math.floor(Math.random() * 6)];
       child.innerText = link[1];
       child.addEventListener("click",(event)=>{onClick(link[0]); event.stopPropagation();}, false);
       parent.appendChild(child);
@@ -88,6 +88,6 @@ document.getElementById("button_rules").addEventListener("click", ()=>
   }
 });
 
-//Button start game or restart (not working)
+//Button start game or restart
 document.getElementById("button_startGame").addEventListener("click", gameStart);
 document.getElementById("button_restart").addEventListener("click", gameStart);

@@ -8,9 +8,6 @@ import re
 
 #endregion
 
-#start gui
-eel.init('web', )
-
 #Get url and title from random wiki url
 def ReturnLink(link):
     with urllib.request.urlopen(link) as response:
@@ -20,7 +17,7 @@ def ReturnLink(link):
 
 #region Initialization
 
-#Initialize the wiki links
+eel.init('web')
 linkRandom = "https://fr.wikipedia.org/wiki/Sp%C3%A9cial:Page_au_hasard"
 likeBase = "https://fr.wikipedia.org"
 global linkStart
@@ -56,7 +53,6 @@ def getStartLink():
 @eel.expose
 def getLinks(link):
     link = link if "http" in link else likeBase + link
-    print(link)
     linkActive = ReturnLink(link)
     listLink = [("","")]
     listLink.remove(("",""))
@@ -84,6 +80,7 @@ def getLinks(link):
 
         #Clean up the list
         listLink[:] = [(x,_) for (x,_) in listLink if CheckLinkToKeep(x,_)]
+        #Transform list of Tuple for js
         listjs = []
         for i in listLink:
             listjs.append(TupleToJs(i))
@@ -92,10 +89,7 @@ def getLinks(link):
         eel.displayOptions(listjs)
         eel.showScore(linkStart[1], linkActive[1], linkFinish[1])
 
-
 #endregion
 
 #start GUI in firefox
 eel.start('index.html', mode='chrome-app')
-
-#endregion

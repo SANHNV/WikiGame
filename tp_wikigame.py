@@ -1,6 +1,3 @@
-#!/bin/python
-# coding: utf-8
-
 #region imports
 
 from bs4 import BeautifulSoup
@@ -136,8 +133,3 @@ while linkActive[1] != linkFinish[1] :
     linkActive = ReturnLink(linkBase + element[0]) #update active link
     print("\n   ------------\n")
 print( bcolors.OKGREEN + "Congrats, you win !" + bcolors.ENDC)
-
-#Keep :
-# "main", {"id" : "content"}
-# not "div", {"id" : "toc"}
-# not "table", {"class" : "infobox_v2"}
