@@ -1,5 +1,5 @@
 # Wiki Game
-Realised in python
+Write in python
 
 ## Info
 
