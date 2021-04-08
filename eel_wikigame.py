@@ -1,7 +1,9 @@
+# pylint: disable=no-member
+# because eel call function of javascript
+
 #region import
 
 import eel
-import random
 from bs4 import BeautifulSoup
 import urllib.request
 import re

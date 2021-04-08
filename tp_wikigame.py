@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup
 import urllib.request
 import re
+import sys
 
 #endregion
 
@@ -115,8 +116,8 @@ def checkSaisie():
             print(colored("red", "/!\\ Entrée invalide, recommencer /!\\"))
         else:
             if number ==0:
-                quit()
-            if number >= 1 and number <= len(listLink) :
+                sys.exit()
+            if 0 < number <= len(listLink) :
                 saisie =  True
             else:
                 print(colored("yellow", "/!\\ Le nombre n'est pas dans la liste. /!\\ \nMais si tu veux quitter, entre 0."))
